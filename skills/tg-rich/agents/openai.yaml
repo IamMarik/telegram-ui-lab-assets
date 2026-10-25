@@ -1,0 +1,3 @@
+interface:
+  display_name: "Telegram Rich"
+  short_description: "Format Telegram Rich Markdown and Rich HTML"

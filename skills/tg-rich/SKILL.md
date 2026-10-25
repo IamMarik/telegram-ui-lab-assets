@@ -1,9 +1,9 @@
 ---
-name: telegram-rich-message
+name: tg-rich
 description: Compose or format Telegram Rich Messages in Rich Markdown or Rich HTML for preview in Telegram UI Lab. Use for a message draft, announcement or existing text intended for either Rich format.
 ---
 
-# Telegram Rich Message
+# Telegram Rich
 
 Turn the user's text or brief into ready-to-paste Rich Message source. Follow the requested language, tone and Rich format; otherwise keep the original language and default to Rich Markdown. Preserve meaning, facts, numbers, links and code; do not invent missing facts.
 
