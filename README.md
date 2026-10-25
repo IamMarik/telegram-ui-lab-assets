@@ -12,7 +12,7 @@ messages check how their source renders before sharing it. The bot has English a
 ## Quick start
 
 1. Open **[@ui_lab_bot](https://t.me/ui_lab_bot)** and press **Start**.
-2. Open `/converter` and choose the format that matches your source.
+2. Open `/converter`. Rich HTML is the default; choose another format if your source uses it.
 3. Paste your HTML, Markdown or plain text. Each message gets its own preview.
 4. Use **View / Source** to inspect the result and its markup, then copy or forward the message.
 
@@ -38,7 +38,7 @@ blocks remain available in JSON instead of markup.
 
 **[tg-rich — Telegram Rich](skills/tg-rich/SKILL.md)** is an AI skill that turns your text or message
 idea into ready-to-paste Rich Markdown or Rich HTML. It preserves your language and meaning and
-defaults to Rich Markdown when you do not specify a format. The skill needs no API keys or scripts.
+defaults to Rich HTML when you do not specify a format. The skill needs no API keys or scripts.
 
 ### Install in Codex
 
@@ -51,7 +51,7 @@ $skill-installer Install the skill from https://github.com/IamMarik/telegram-ui-
 Then use it with your own text or brief, for example:
 
 ```text
-$tg-rich Format a Telegram announcement in Rich Markdown: our design workshop starts Friday at 18:00. Include a checklist: notebook, pen and laptop.
+$tg-rich Format a Telegram announcement: our design workshop starts Friday at 18:00. Include a checklist: notebook, pen and laptop.
 ```
 
 Other AI assistants with skill support can install the [tg-rich folder](skills/tg-rich) using
@@ -59,32 +59,34 @@ their own installation workflow. For a single conversation, give an assistant th
 the [raw SKILL.md](https://raw.githubusercontent.com/IamMarik/telegram-ui-lab-assets/main/skills/tg-rich/SKILL.md)
 and ask it to follow the instructions with your text.
 
-Copy the contents of the generated code block, select `/richmd` or `/richhtml` in
-[@ui_lab_bot](https://t.me/ui_lab_bot) to match the source, and send it to preview the result.
+Copy the contents of the generated code block and send them to
+[@ui_lab_bot](https://t.me/ui_lab_bot) to preview the result. The bot starts in Rich HTML;
+if you changed modes, select `/richhtml` for Rich HTML or `/richmd` for Rich Markdown.
 Omit the outer backticks and language label. If the AI returns several messages, send each block separately.
 
 See the [official Codex skills guide](https://learn.chatgpt.com/docs/build-skills#install-curated-skills-for-local-use)
 for installation details.
 
-## Example: a Rich Markdown message
+## Example: a Rich HTML message
 
-Select `/richmd` in [Telegram UI Lab](https://t.me/ui_lab_bot), then paste this example:
+Select `/richhtml` in [Telegram UI Lab](https://t.me/ui_lab_bot), then paste this example:
 
-````markdown
-## A message worth sharing
-
-**Your text**, with a little more structure.
-
-- Highlight what matters.
-- Keep the next step clear.
+````html
+<h2>A message worth sharing</h2>
+<p><b>Your text</b>, with a little more structure.</p>
+<ul>
+<li>Highlight what matters.</li>
+<li>Keep the next step clear.</li>
+</ul>
 
 <details><summary>Message ingredients</summary>
 
-| Ingredient | Details |
-| --- | --- |
-| Text | Yours |
-| Formatting | **Rich** |
-| Result | Ready to forward |
+<table>
+<tr><th>Ingredient</th><th>Details</th></tr>
+<tr><td>Text</td><td>Yours</td></tr>
+<tr><td>Formatting</td><td><b>Rich</b></td></tr>
+<tr><td>Result</td><td>Ready to forward</td></tr>
+</table>
 
 </details>
 

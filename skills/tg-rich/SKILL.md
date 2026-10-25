@@ -5,7 +5,7 @@ description: Compose or format Telegram Rich Messages in Rich Markdown or Rich H
 
 # Telegram Rich
 
-Turn the user's text or brief into ready-to-paste Rich Message source. Follow the requested language, tone and Rich format; otherwise keep the original language and default to Rich Markdown. Preserve meaning, facts, numbers, links and code; do not invent missing facts.
+Turn the user's text or brief into ready-to-paste Rich Message source. Follow the requested language, tone and Rich format; otherwise keep the original language and default to Rich HTML. Preserve meaning, facts, numbers, links and code; do not invent missing facts.
 
 Use short paragraphs and purposeful headings, lists and emphasis. Keep essential information visible; put optional details in independent, non-nested `<details>` sections when useful.
 
