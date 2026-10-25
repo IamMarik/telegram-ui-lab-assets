@@ -5,14 +5,17 @@ description: Compose or format Telegram Rich Messages in Rich Markdown or Rich H
 
 # Telegram Rich Message
 
-Turn the user's text or message brief into ready-to-paste Telegram Rich Markdown or Rich HTML. Follow their requested language, tone and output format. Use the requested Rich format; default to Rich Markdown when none is specified.
+Turn the user's text or brief into ready-to-paste Rich Message source. Follow the requested language, tone and Rich format; otherwise keep the original language and default to Rich Markdown. Preserve meaning, facts, numbers, links and code; do not invent missing facts.
 
-1. Read the official syntax for the selected format:
-   - [Rich Markdown](https://core.telegram.org/bots/api#rich-markdown-style): preview with `/richmd`. Use `**bold**` and `*italic*`; do not apply MarkdownV2 escaping.
-   - [Rich HTML](https://core.telegram.org/bots/api#rich-html-style): preview with `/richhtml`. Use supported tags such as `<h2>`, `<p>`, `<b>`, `<i>` and `<ul><li>`. This is Telegram Rich HTML; use no CSS or unsupported browser HTML.
-2. Preserve the meaning, facts, numbers, links and code in existing text. When drafting from a brief, use the supplied facts without inventing details.
-3. Make the message readable on a phone. Use short paragraphs and purposeful headings, lists and emphasis.
-4. Put optional supporting details in separate `<details>` sections when useful. Keep the main message and essential information visible. Do not nest expandable sections. In Rich Markdown, put Markdown directly inside each section, with blank lines around the body:
+Use short paragraphs and purposeful headings, lists and emphasis. Keep essential information visible; put optional details in independent, non-nested `<details>` sections when useful.
+
+1. Choose the matching syntax and preview mode:
+   - [Rich Markdown](https://core.telegram.org/bots/api#rich-markdown-style), `/richmd`: `# Heading`, `**bold**`, `*italic*`, `- item`, `[label](URL)`. Do not apply MarkdownV2 escaping.
+   - [Rich HTML](https://core.telegram.org/bots/api#rich-html-style), `/richhtml`: supported tags such as `<h2>`, `<p>`, `<b>`, `<i>` and `<ul><li>`. Escape literal text and attribute values, keeping formatting tags intact. No CSS or unsupported browser HTML.
+
+   Use these basics directly. Consult the matching reference for unfamiliar syntax; if it is unavailable and the syntax is uncertain, ask for the relevant excerpt.
+
+2. In Rich Markdown, Markdown works inside `<details>` with blank lines around its body:
 
    ```markdown
    <details><summary>More details</summary>
@@ -22,19 +25,18 @@ Turn the user's text or message brief into ready-to-paste Telegram Rich Markdown
    </details>
    ```
 
-   In Rich HTML, use HTML throughout the section:
+   In Rich HTML, use HTML throughout:
 
    ```html
-   <details>
-     <summary>More details</summary>
-     <ul>
-       <li>A supporting point</li>
-     </ul>
-   </details>
+   <details><summary>More details</summary><ul><li>A supporting point</li></ul></details>
    ```
 
-5. In Rich HTML, escape literal text and attribute values as required, while keeping formatting tags intact. Return raw markup rather than escaping the entire source or wrapping it in JSON.
-6. Keep each message's complete source within 3,500 UTF-16 code units, including tags, escapes, URLs and whitespace. Count the source, not just the visible text; JavaScript's `source.length` gives this measure. Exclude only the outer response fence. This leaves margin below the ordinary 4,096-character text-message limit used to paste source into the bot; the larger Rich Message rendering limit does not increase this input budget. If the content is longer, split it into complete standalone messages at sensible boundaries without silently dropping content. Keep tags, details sections, tables and code blocks valid within each part. The bot previews each part separately and does not assemble fragments.
-7. By default, return only the source in a standard copyable fenced code block labeled `markdown` or `html` to match the selected format. Use one block per Telegram message; use multiple blocks only when splitting for length. Start opening and closing fences at column 1 on separate lines, outside lists and blockquotes. Use at least four backticks and a fence longer than any backtick run in the source, so inner code blocks cannot close it early. Keep every source line, including `<blockquote>`, `<details>` and Markdown quote markers, inside the fence. Show literal source throughout; do not render the HTML or turn the response itself into a quotation.
+   Rich Markdown is not parsed inside most other block HTML tags: use `<blockquote><b>Important</b></blockquote>`, not Markdown emphasis inside that tag.
 
-The user copies each code block with its Copy control, selects the matching mode in Telegram UI Lab and sends that source as a separate message. When copying manually, omit the outer backticks and language label. If the selected reference cannot be accessed and the requested syntax is uncertain, ask for the relevant excerpt instead of inventing it.
+3. For embedded images, use supplied public HTTP(S) URLs in standalone media blocks. Local paths and invented media identifiers do not work in this paste-only flow. For buttons, use supplied URLs or known bot actions; callback buttons require handlers. Do not present invented callback data as a working action. Ask for missing links or action details only when needed to fulfill the request.
+
+4. Keep each complete source within 3,500 UTF-16 code units, including markup, escapes, URLs and whitespace, excluding the outer response fence. With execution tools, verify using JavaScript `source.length`. This is the bot's paste budget, separate from Rich rendering limits. Split longer content into complete standalone messages with valid markup, preserving all content. The bot previews each part separately without assembling fragments.
+
+5. By default, return only one fenced `markdown` or `html` source block per message. Fences start at column 1, outside quotations and lists. Use at least four backticks and more than any backtick run in the source. Keep all markup inside the fence; do not render it or wrap it in JSON.
+
+The user copies each block's contents without the outer fence and sends it to Telegram UI Lab in the matching mode.
